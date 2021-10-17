@@ -58,7 +58,7 @@ namespace SortTable
         {
             Console.WriteLine(id + " - " + name + " - " + address);
 
-          
+
         }
     }
     class TableDAO
@@ -138,14 +138,14 @@ namespace SortTable
             }
         }
 
-        void printRow(SortFields fields) 
+        void printRow(SortFields fields)
         {
 
-            string sep = "" ;
+            string sep = "";
 
-            for (int i =0; i<r.Count; i++)
+            for (int i = 0; i < r.Count; i++)
             {
-                switch (fields) 
+                switch (fields)
                 {
                     case SortFields.ID:
                         Console.Write(r[i].id);
@@ -200,11 +200,11 @@ namespace SortTable
 
             }
         }
-        
 
 
-            public void sortByShell(SortFields field, SortOrder order)
-            {
+
+        public void sortByShell(SortFields field, SortOrder order)
+        {
             //расстояние между элементами, которые сравниваются
             var d = r.Count / 2;
             TableRow temp;
@@ -213,11 +213,13 @@ namespace SortTable
                 for (var i = d; i < r.Count; i++)
                 {
                     var j = i;
-                    while (j >= d && r[j - d].compareTo(r[j],field,order) > 0 )
+                    while (j >= d && r[j - d].compareTo(r[j], field, order) > 0)
                     {
                         temp = r[j];
-                        r[j] = r[j-d];
+                        r[j] = r[j - d];
                         r[j - d] = temp;
+
+                        printRow(field);
 
                         j = j - d;
                     }
@@ -226,7 +228,7 @@ namespace SortTable
                 d = d / 2;
             }
 
-           
+
         }
 
 
@@ -242,19 +244,10 @@ namespace SortTable
         }
 
 
-        
-
-
-
-
-
         class Program
         {
 
-
-
-/*
-            static void _Main(string[] args)
+            static void Main(string[] args)
             {
 
                 string pathToMenu = "menu.txt";
@@ -265,7 +258,7 @@ namespace SortTable
                 TableRow parametres = new TableRow();
                 TableDAO dao = new TableDAO();
 
-               
+
 
                 while (true)
                 {
@@ -276,8 +269,8 @@ namespace SortTable
                     string name;
                     string address;
 
-                    
-                
+
+
 
 
                     Console.Clear();
@@ -285,25 +278,25 @@ namespace SortTable
                     {
                         case 1:
 
-                             Console.WriteLine(" Please enter your Rows ID->NAME->YOUR ADDRESS");
+                            Console.WriteLine(" Please enter your Rows ID->NAME->YOUR ADDRESS");
 
 
-                             insID = int.Parse(Console.ReadLine());
-                             name = Console.ReadLine();
-                             address = Console.ReadLine();
+                            insID = int.Parse(Console.ReadLine());
+                            name = Console.ReadLine();
+                            address = Console.ReadLine();
 
-                                 Console.WriteLine("\n");
+                            Console.WriteLine("\n");
 
 
-                                 dao.createRow(insID, name , address );
-                               
- 
+                            dao.createRow(insID, name, address);
+
+
 
 
                             dao.print();
 
-                               
-                                Console.WriteLine("\n");
+
+                            Console.WriteLine("\n");
 
 
                             break;
@@ -363,13 +356,18 @@ namespace SortTable
 
                         case 0: break;
                         default: Console.WriteLine("Wrong enter"); break;
-                         
+
+
+
+                            Console.ReadKey();
+
+                            Console.ReadKey();
 
 
                     }
-                }*/
+                }
 
-                static void Main(string[] args)
+                static void _TestSort(string[] args)
                 {
                     TableDAO dao = new TableDAO();
 
@@ -385,9 +383,10 @@ namespace SortTable
                     dao.sortByIncl(SortFields.ID, SortOrder.ASC);
                     dao.print();
 
-                Console.ReadKey();
+                  
 
-                Console.ReadKey();
+
+                }
 
 
 
@@ -396,12 +395,9 @@ namespace SortTable
 
 
         }
-             
 
-     
+
     }
-
-
 }
 
 
