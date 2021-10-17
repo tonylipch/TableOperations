@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
+﻿
+using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace SortTable
 
     class TableRow
     {
-        public string id { get; set; }
+        public int id { get; set; }
         public string name { get; set; }
         public string address { get; set; }
 
@@ -56,8 +57,8 @@ namespace SortTable
         public void print()
         {
             Console.WriteLine(id + " - " + name + " - " + address);
-            //            Console.WriteLine(name);
-            //            Console.WriteLine(address);
+
+          
         }
     }
     class TableDAO
@@ -66,7 +67,7 @@ namespace SortTable
         List<TableRow> r = new List<TableRow>();
 
 
-        public TableRow createRow(string id, string name, string address)
+        public TableRow createRow(int id, string name, string address)
         {
             TableRow row = new TableRow();
 
@@ -84,7 +85,7 @@ namespace SortTable
 
         }
 
-        private int findRowIndex(string id)
+        private int findRowIndex(int id)
         {
             TableRow row = new TableRow();
             for (int i = 0; i < r.Count; i++)
@@ -95,7 +96,7 @@ namespace SortTable
             return -1;
         }
 
-        public TableRow get(string id)
+        public TableRow get(int id)
         {
             int index = findRowIndex(id);
             if (index >= 0)
@@ -111,7 +112,7 @@ namespace SortTable
             return r;
         }
 
-        public void update(String id, String name, String address)
+        public void update(int id, String name, String address)
         {
 
             int index = findRowIndex(id);
@@ -124,7 +125,7 @@ namespace SortTable
             }
         }
 
-        public void delete(String id)
+        public void delete(int id)
         {
 
 
@@ -137,10 +138,48 @@ namespace SortTable
             }
         }
 
+        void printRow(SortFields fields) 
+        {
+
+            string sep = "" ;
+
+            for (int i =0; i<r.Count; i++)
+            {
+                switch (fields) 
+                {
+                    case SortFields.ID:
+                        Console.Write(r[i].id);
+                        Console.Write(",");
+                        break;
+
+                    case SortFields.NAME:
+                        Console.Write(r[i].name);
+                        Console.Write(",");
+                        break;
+
+                    case SortFields.ADDRESS:
+                        Console.Write(r[i].address);
+                        Console.Write(",");
+                        break;
+
+
+
+                }
+                sep = ",";
+
+            }
+            Console.WriteLine();
+
+
+
+
+        }
 
         public void sortByIncl(SortFields field, SortOrder order)
         {
             TableRow temp;
+            printRow(field);
+
             //Sort Including
             for (int i = 1; i < r.Count; i++)
             {
@@ -151,6 +190,7 @@ namespace SortTable
                 while (j > 0 && r[j - 1].compareTo(temp, field, order) > 0)
                 {
                     r[j] = r[j - 1];
+                    printRow(field);
                     j--;
 
                 }
@@ -213,8 +253,8 @@ namespace SortTable
 
 
 
-
-            static void Main(string[] args)
+/*
+            static void _Main(string[] args)
             {
 
                 string pathToMenu = "menu.txt";
@@ -245,19 +285,22 @@ namespace SortTable
                     {
                         case 1:
 
-                            Console.WriteLine(" Please enter your Rows ID->NAME->YOUR ADDRESS");
+                             Console.WriteLine(" Please enter your Rows ID->NAME->YOUR ADDRESS");
 
 
-                            insID = int.Parse(Console.ReadLine());
-                            name = Console.ReadLine();
-                            address = Console.ReadLine();
+                             insID = int.Parse(Console.ReadLine());
+                             name = Console.ReadLine();
+                             address = Console.ReadLine();
 
-                                Console.WriteLine("\n");
+                                 Console.WriteLine("\n");
 
 
-                                dao.createRow(insID.ToString() , name , address );
+                                 dao.createRow(insID, name , address );
+                               
+ 
 
-                                dao.print();
+
+                            dao.print();
 
                                
                                 Console.WriteLine("\n");
@@ -274,7 +317,7 @@ namespace SortTable
                             insID = int.Parse(Console.ReadLine());
                             name = Console.ReadLine();
                             address = Console.ReadLine();
-                            dao.update(insID.ToString(), name, address);
+                            dao.update(insID, name, address);
 
                             Console.WriteLine("\n Update has been success \n\n");
 
@@ -291,7 +334,7 @@ namespace SortTable
 
                             insID = int.Parse(Console.ReadLine());
 
-                            dao.delete(insID.ToString());
+                            dao.delete(insID);
 
                             Console.WriteLine("\n Row has been deleted\n");
 
@@ -324,16 +367,41 @@ namespace SortTable
 
 
                     }
-                }
+                }*/
 
+                static void Main(string[] args)
+                {
+                    TableDAO dao = new TableDAO();
+
+
+                    dao.createRow(2, "", "");
+                    dao.createRow(12, "", "");
+                    dao.createRow(46, "", "");
+                    dao.createRow(48, "", "");
+                    dao.createRow(3, "", "");
+                    dao.createRow(6, "", "");
+                    dao.createRow(102, "", "");
+
+                    dao.sortByIncl(SortFields.ID, SortOrder.ASC);
+                    dao.print();
 
                 Console.ReadKey();
 
                 Console.ReadKey();
+
+
 
             }
+
+
+
         }
+             
+
+     
     }
+
+
 }
 
 
